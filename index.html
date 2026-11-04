@@ -23,11 +23,11 @@
 
             const scale = 1;
             
-            for (let i = 0; i < width; i++) {
-                for (let j = 0; j < height; j++) {
-                    const pixelIndex = (j * height + width) * 4;
+            for (let i = 0; i < height; i++) {
+                for (let j = 0; j < width; j++) {
+                    const pixelIndex = (i * height + j) * 4;
                     
-                    const value = (pn.noise(i * scale, j * scale, 0) + 1) / 2;
+                    const value = (pn.noise(j * scale, i * scale, 0) + 1) / 2;
 
                     const color = Math.floor(value * 255);
 
