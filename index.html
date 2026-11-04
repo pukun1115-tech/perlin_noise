@@ -25,7 +25,7 @@
             
             for (let i = 0; i < height; i++) {
                 for (let j = 0; j < width; j++) {
-                    const pixelIndex = (i * height + j) * 4;
+                    const pixelIndex = (i * width + j) * 4;
                     
                     const value = (pn.noise(j * scale, i * scale, 0) + 1) / 2;
 
