@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>Perlin Noise Test</title>
+    </head>
+    <body>
+        <canvas id="c"></canvas>
+        <script type="module">
+            import { PerlinNoise } from "./perlin_noise.js";
+            const canvas = document.getElementById("c");
+            const ctx = canvas.getContext("2d");
+            
+            const width = 256;
+            const height = 256;
+            canvas.width = width;
+            canvas.height = height;
+
+            const pn = new PerlinNoise();
+
+            const imageData = ctx.createImageData(width, height);
+            const data = imageData.data;
+
+            const scale = 1;
+            
+            for (let i = 0; i < width; i++) {
+                for (let j = 0; j < height; j++) {
+                    const pixelIndex = (j * height + width) * 4;
+                    
+                    const value = (pn.noise(i * scale, j * scale, 0) + 1) / 2;
+
+                    const color = Math.floor(value * 255);
+
+                    data[pixelIndex + 0] = color;
+                    data[pixelIndex + 1] = color;
+                    data[pixelIndex + 2] = color;
+                    data[pixelIndex + 3] = 255;
+                }
+            }
+
+            ctx.putImageData(imageData, 0, 0);
+        </script>
+    </body>
+</html>
