@@ -17,7 +17,7 @@ export class PerlinNoise {
      * @returns {number}
      */
     fade(t) {
-        return t * t * t * (t * t * (t * 6 - 15) + 10);
+        return t * t * t * (t * (t * 6 - 15) + 10);
     }
 
     /**
