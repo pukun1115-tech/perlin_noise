@@ -8,7 +8,7 @@ export class PerlinNoise {
         /** @type {Uint16Array} */
         this.p = new Uint16Array(512);
         for (let i = 0; i < 512; i++) {
-            this.p[i] = permutation[i & 255];
+            this.p[i] = permutation[(i & 255)];
         }
     }
 
@@ -31,13 +31,28 @@ export class PerlinNoise {
     }
 
     grad(hash, x, y, z) {
-        //
+        const h = hash & 15;
+
+        const u = (h < 8 ? x : y);
+        /*
+        let v;
+        if (h < 4) {
+            v = y;
+        } else if (h === 12 || h === 14) {
+            v = x;
+        } else {
+            v = z;
+        }
+        */
+        const v = (h < 4 ? y : (h === 12 || h === 14 ? x : z));
+    
+        return ((h & 1) === 0 ? u : -u) + ((h & 2) === 0 ? v : -v);
     }
 
     noise(x, y = 0, z = 0) {
-        const X = Math.floor(x) & 255;
-        const Y = Math.floor(y) & 255;
-        const Z = Math.floor(z) & 255;
+        const X = (Math.floor(x) & 255);
+        const Y = (Math.floor(y) & 255);
+        const Z = (Math.floor(z) & 255);
 
         x -= Math.floor(x);
         y -= Math.floor(y);
