@@ -1,4 +1,4 @@
-class PerlinNoise {
+export class PerlinNoise {
     constructor() {
         /** @type {Array<number>} */
         let permutation = [];
