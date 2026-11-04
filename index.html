@@ -6,7 +6,7 @@
     </head>
     <body>
         <canvas id="canvas"></canvas>
-        <input id = "range" type="range" min="0.01" max="1" step="0.01" value="1">
+        <input id = "range" type="range" width="512" min="0.01" max="1" step="0.01" value="1">
         <p id="scaleValue"></p>
         <script type="module">
             import { PerlinNoise } from "./perlin_noise.js";
@@ -16,8 +16,8 @@
             
             const ctx = canvas.getContext("2d");
             
-            const width = 1024;
-            const height = 512;
+            const width = 768;
+            const height = 768;
             canvas.width = width;
             canvas.height = height;
 
