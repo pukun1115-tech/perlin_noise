@@ -5,10 +5,15 @@
         <title>Perlin Noise Test</title>
     </head>
     <body>
-        <canvas id="c"></canvas>
+        <canvas id="canvas"></canvas>
+        <input id = "range" type="range" min="0.01" max="1" step="0.01" value="1">
+        <p id="scaleValue"></p>
         <script type="module">
             import { PerlinNoise } from "./perlin_noise.js";
-            const canvas = document.getElementById("c");
+            const canvas = document.getElementById("canvas");
+            const range = document.getElementById("range");
+            const scaleValue = document.getElementById("scaleValue");
+            
             const ctx = canvas.getContext("2d");
             
             const width = 256;
@@ -18,27 +23,38 @@
 
             const pn = new PerlinNoise();
 
-            const imageData = ctx.createImageData(width, height);
-            const data = imageData.data;
+            function mainLoop() {
+                const imageData = ctx.createImageData(width, height);
+                const data = imageData.data;
 
-            const scale = 0.05;
+                const scale = range.valueAsNumber;
+                scaleValue.textContent = scale;
             
-            for (let i = 0; i < height; i++) {
-                for (let j = 0; j < width; j++) {
-                    const pixelIndex = (i * width + j) * 4;
+                for (let i = 0; i < height; i++) {
+                    for (let j = 0; j < width; j++) {
+                        const pixelIndex = (i * width + j) * 4;
                     
-                    const value = (pn.noise(j * scale, i * scale, 0) + 1) / 2;
+                        const value = (pn.noise(j * scale, i * scale, 0) + 1) / 2;
 
-                    const color = Math.floor(value * 255);
-
-                    data[pixelIndex + 0] = color;
-                    data[pixelIndex + 1] = color;
-                    data[pixelIndex + 2] = color;
-                    data[pixelIndex + 3] = 255;
+                        const color = Math.floor(value * 255);
+                    
+                        data[pixelIndex + 0] = color;
+                        data[pixelIndex + 1] = color;
+                        data[pixelIndex + 2] = color;
+                        data[pixelIndex + 3] = 255;
+                    }
                 }
+
+                ctx.putImageData(imageData, 0, 0);
+
+                window.requestAnimationFrame(() => {
+                    mainLoop();
+                });
             }
 
-            ctx.putImageData(imageData, 0, 0);
+            window.requestAnimationFrame(() => {
+                mainLoop();
+            });
         </script>
     </body>
 </html>
