@@ -5,6 +5,12 @@ export class PerlinNoise {
         for (let i = 0; i < 256; i++) {
             permutation[i] = i;
         }
+        
+        for (let i = 255; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [permutation[i], permutation[j]] = [permutation[j], permutation[i]];
+        }
+        
         /** @type {Uint16Array} */
         this.p = new Uint16Array(512);
         for (let i = 0; i < 512; i++) {
