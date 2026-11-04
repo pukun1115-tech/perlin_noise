@@ -1,19 +1,37 @@
 export class PerlinNoise {
     constructor() {
-        /** @type {Array<number>} */
-        let permutation = [];
-        for (let i = 0; i < 255; i++) {
-            permutation.push(i);
+        /** @type {Uint16Array} */
+        const permutation = new Uint16Array(256);
+        for (let i = 0; i < 256; i++) {
+            permutation[i] = i;
         }
-        this.p = [...permutation];
+        /** @type {Uint16Array} */
+        this.p = new Uint16Array(512);
+        for (let i = 0; i < 512; i++) {
+            this.p[i] = permutation[i & 255];
+        }
     }
 
+    /**
+     * @param {number} t
+     * @returns {number}
+     */
     fade(t) {
         return t * t * t * (t * t * (t * 6 - 15) + 10);
     }
 
+    /**
+     * @param {number} t
+     * @param {number} a
+     * @param {number} b
+     * @returns {number}
+     */
     lerp(t, a, b) {
         return a + t * (b - a);
+    }
+
+    grad(hash, x, y, z) {
+        //
     }
 
     noise(x, y = 0, z = 0) {
@@ -25,12 +43,16 @@ export class PerlinNoise {
         y -= Math.floor(y);
         z -= Math.floor(z);
 
-        const A = this.permutation[X] + Y;
-        const AA = this.permutation[A] + Z;
-        const AB = this.permutation[A + 1] + Z;
+        const u = this.fade(x);
+        const v = this.fade(y);
+        const w = this.fade(z);
 
-        const B = this.permutation[X + 1] + Y;
-        const BA = this.permutation[B] + Z;
-        const BB = this.permutation[B + 1] + Z;
+        const A = this.p[X] + Y;
+        const AA = this.p[A] + Z;
+        const AB = this.p[A + 1] + Z;
+
+        const B = this.p[X + 1] + Y;
+        const BA = this.p[B] + Z;
+        const BB = this.p[B + 1] + Z;
     }
 }
