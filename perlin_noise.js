@@ -55,6 +55,10 @@ export class PerlinNoise {
         return ((h & 1) === 0 ? u : -u) + ((h & 2) === 0 ? v : -v);
     }
 
+    normalize(t) {
+        return (t + 1) / 2;
+    }
+
     noise(x, y = 0, z = 0) {
         x = (x < 0 ? (x % 255) + 255 : x);
         y = (y < 0 ? (y % 255) + 255 : y);
