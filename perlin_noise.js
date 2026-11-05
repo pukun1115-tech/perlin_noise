@@ -60,10 +60,6 @@ export class PerlinNoise {
     }
 
     noise(x, y = 0, z = 0) {
-        x = (x < 0 ? (x % 255) + 255 : x);
-        y = (y < 0 ? (y % 255) + 255 : y);
-        z = (z < 0 ? (z % 255) + 255 : z);
-
         const X = (Math.floor(x) & 255);
         const Y = (Math.floor(y) & 255);
         const Z = (Math.floor(z) & 255);
