@@ -5,12 +5,12 @@ export class PerlinNoise {
         for (let i = 0; i < 256; i++) {
             permutation[i] = i;
         }
-        
+
         for (let i = 255; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [permutation[i], permutation[j]] = [permutation[j], permutation[i]];
         }
-        
+
         /** @type {Uint16Array} */
         this.p = new Uint16Array(512);
         for (let i = 0; i < 512; i++) {
@@ -51,11 +51,15 @@ export class PerlinNoise {
         }
         */
         const v = (h < 4 ? y : (h === 12 || h === 14 ? x : z));
-    
+
         return ((h & 1) === 0 ? u : -u) + ((h & 2) === 0 ? v : -v);
     }
 
     noise(x, y = 0, z = 0) {
+        x = (x < 0 ? (x % 255) + 255 : x);
+        y = (y < 0 ? (y % 255) + 255 : y);
+        z = (z < 0 ? (z % 255) + 255 : z);
+
         const X = (Math.floor(x) & 255);
         const Y = (Math.floor(y) & 255);
         const Z = (Math.floor(z) & 255);
@@ -70,7 +74,7 @@ export class PerlinNoise {
 
         const a = this.p[X] + Y;
         const b = this.p[X + 1] + Y;
-        
+
         const idx000 = this.p[a] + Z;
         const idx010 = this.p[a + 1] + Z;
         const idx100 = this.p[b] + Z;
