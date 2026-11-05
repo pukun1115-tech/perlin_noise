@@ -80,7 +80,7 @@ export class PerlinNoise {
         const idx101 = this.p[b] + Z + 1;
         const idx111 = this.p[b + 1] + Z + 1;
 
-        return this.lerp(
+        const value = this.lerp(
             w,
             this.lerp(
                 v,
@@ -109,5 +109,7 @@ export class PerlinNoise {
                 )
             )
         );
+
+        return Math.max(-1, Math.min(1, value));
     }
 }
