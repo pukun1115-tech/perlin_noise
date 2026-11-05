@@ -75,6 +75,10 @@ export class PerlinNoise {
         const idx010 = this.p[a + 1] + Z;
         const idx100 = this.p[b] + Z;
         const idx110 = this.p[b + 1] + Z;
+        const idx001 = this.p[a] + Z + 1;
+        const idx011 = this.p[a + 1] + Z + 1;
+        const idx101 = this.p[b] + Z + 1;
+        const idx111 = this.p[b + 1] + Z + 1;
 
         return this.lerp(
             w,
@@ -82,26 +86,26 @@ export class PerlinNoise {
                 v,
                 this.lerp(
                     u,
-                    this.grad(this.p[idx000 + 0], x - 0, y - 0, z - 0),
-                    this.grad(this.p[idx100 + 0], x - 1, y - 0, z - 0)
+                    this.grad(this.p[idx000], x - 0, y - 0, z - 0),
+                    this.grad(this.p[idx100], x - 1, y - 0, z - 0)
                 ),
                 this.lerp(
                     u,
-                    this.grad(this.p[idx010 + 0], x - 0, y - 1, z - 0),
-                    this.grad(this.p[idx110 + 0], x - 1, y - 1, z - 0)
+                    this.grad(this.p[idx010], x - 0, y - 1, z - 0),
+                    this.grad(this.p[idx110], x - 1, y - 1, z - 0)
                 )
             ),
             this.lerp(
                 v,
                 this.lerp(
                     u,
-                    this.grad(this.p[idx000 + 1], x - 0, y - 0, z - 1),
-                    this.grad(this.p[idx100 + 1], x - 1, y - 0, z - 1)
+                    this.grad(this.p[idx001], x - 0, y - 0, z - 1),
+                    this.grad(this.p[idx101], x - 1, y - 0, z - 1)
                 ),
                 this.lerp(
                     u,
-                    this.grad(this.p[idx010 + 1], x - 0, y - 1, z - 1),
-                    this.grad(this.p[idx110 + 1], x - 1, y - 1, z - 1)
+                    this.grad(this.p[idx011], x - 0, y - 1, z - 1),
+                    this.grad(this.p[idx111], x - 1, y - 1, z - 1)
                 )
             )
         );
